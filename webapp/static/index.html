@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>人力资源区块链管理系统</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="topbar">
+  <div class="brand">
+    <span class="logo">⛓</span>
+    <div>
+      <h1>人力资源区块链管理系统</h1>
+      <p>Hyperledger Fabric · Go 智能合约 · fabric-sdk-go</p>
+    </div>
+  </div>
+  <div class="net-badge"><span class="dot"></span> 通道 mychannel · 链码 hrcc</div>
+</header>
+
+<main class="container">
+  <!-- 统计概览 -->
+  <section class="stats" id="statsCards">
+    <div class="stat-card"><div class="stat-num" id="stTotal">-</div><div class="stat-label">员工总数</div></div>
+    <div class="stat-card green"><div class="stat-num" id="stActive">-</div><div class="stat-label">在职</div></div>
+    <div class="stat-card orange"><div class="stat-num" id="stLeave">-</div><div class="stat-label">休假</div></div>
+    <div class="stat-card gray"><div class="stat-num" id="stResigned">-</div><div class="stat-label">离职</div></div>
+    <div class="stat-card blue"><div class="stat-num" id="stAvg">-</div><div class="stat-label">在职平均薪资</div></div>
+  </section>
+
+  <!-- 部门分布 -->
+  <section class="panel">
+    <h2>部门人数分布</h2>
+    <div id="deptBars" class="dept-bars"></div>
+  </section>
+
+  <!-- 工具栏 -->
+  <section class="panel">
+    <div class="toolbar">
+      <h2>员工信息管理</h2>
+      <div class="tools">
+        <input type="text" id="searchBox" placeholder="搜索姓名 / 编号 / 职位...">
+        <select id="deptFilter"><option value="">全部部门</option></select>
+        <button class="btn primary" id="btnAdd">+ 新增员工</button>
+        <button class="btn ghost" id="btnRefresh">刷新</button>
+      </div>
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>编号</th><th>姓名</th><th>性别</th><th>部门</th><th>职位</th>
+            <th>电话</th><th>薪资</th><th>入职日期</th><th>状态</th><th>操作</th>
+          </tr>
+        </thead>
+        <tbody id="empTbody"></tbody>
+      </table>
+    </div>
+  </section>
+</main>
+
+<!-- 员工表单弹窗 -->
+<div class="modal-mask" id="formModal">
+  <div class="modal">
+    <div class="modal-head">
+      <h3 id="formTitle">新增员工</h3>
+      <span class="close" data-close="formModal">×</span>
+    </div>
+    <div class="modal-body">
+      <form id="empForm">
+        <div class="form-grid">
+          <label>员工编号<input type="text" id="fId" required></label>
+          <label>姓名<input type="text" id="fName" required></label>
+          <label>性别
+            <select id="fGender"><option>男</option><option>女</option></select>
+          </label>
+          <label>部门<input type="text" id="fDept" required></label>
+          <label>职位<input type="text" id="fPosition"></label>
+          <label>电话<input type="text" id="fPhone"></label>
+          <label>薪资<input type="number" id="fSalary" step="0.01" min="0"></label>
+          <label>入职日期<input type="date" id="fHireDate"></label>
+          <label>状态
+            <select id="fStatus"><option>在职</option><option>休假</option><option>离职</option></select>
+          </label>
+        </div>
+        <div class="modal-foot">
+          <button type="button" class="btn ghost" data-close="formModal">取消</button>
+          <button type="submit" class="btn primary">保存上链</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- 历史溯源弹窗 -->
+<div class="modal-mask" id="historyModal">
+  <div class="modal wide">
+    <div class="modal-head">
+      <h3>员工信息历史溯源 <span id="histEmp"></span></h3>
+      <span class="close" data-close="historyModal">×</span>
+    </div>
+    <div class="modal-body">
+      <div class="timeline" id="timeline"></div>
+    </div>
+  </div>
+</div>
+
+<div id="toast" class="toast"></div>
+<script src="app.js"></script>
+</body>
+</html>
