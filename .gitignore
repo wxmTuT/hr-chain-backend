@@ -1,0 +1,9 @@
+*.exe
+vendor/
+go.work
+go.work.sum
+*.log
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db
